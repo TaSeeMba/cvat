@@ -1,0 +1,58 @@
+name: CI/CD Build and Push Pipeline
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - release-1.1.0
+
+env:
+  AWS_DEFAULT_REGION: af-south-1
+  AWS_DEFAULT_OUTPUT: json
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  CONTAINER_IMAGE_BACKEND: cvat-backend:${{ github.sha }}
+  CONTAINER_IMAGE_FRONTEND: cvat-frontend:${{ github.sha }}
+
+jobs:
+  build-and-push:
+    name: Building and pushing backend image to AWS ECR
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    steps:
+      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+      - name: Login to ECR
+        run: |
+          $( aws ecr get-login --no-include-email )
+      - name: Build and tag the backend image
+        run: |
+          docker build \
+            -t $CONTAINER_IMAGE_BACKEND \
+            --build-arg TF_ANNOTATION=no --build-arg AUTO_SEGMENTATION=no \
+            --build-arg WITH_TESTS=no --build-arg TZ="Etc/UTC" --build-arg OPENVINO_TOOLKIT=no \
+            --build-arg USER=django --build-arg DJANGO_CONFIGURATION=production \
+            --build-arg TZ="Etc/UTC" \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_BACKEND .
+      - name: Push backend image to ECR
+        run: |
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_BACKEND
+
+  build-and-push-frontend:
+    name: Building and pushing frontend image to AWS ECR
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    steps:
+      # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+      - name: Login to ECR
+        run: |
+          $( aws ecr get-login --no-include-email )
+      - name: Build and tag the backend image
+        run: |
+          docker build --file Dockerfile.ui \
+            --tag $CONTAINER_IMAGE_FRONTEND \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_FRONTEND .
+      - name: Push backend image to ECR
+        run: |
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE_FRONTEND

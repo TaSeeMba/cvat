@@ -1,0 +1,20 @@
+version: "2.3"
+
+services:
+  cvat_ci:
+    image: cvat_ci
+    build:
+      network: host
+      context: .
+      dockerfile: Dockerfile.ci
+    depends_on:
+      - cvat
+    environment:
+      COVERALLS_REPO_TOKEN:
+      TRAVIS:
+      TRAVIS_JOB_ID:
+      TRAVIS_BRANCH:
+      TRAVIS_PULL_REQUEST:
+      CONTAINER_COVERAGE_DATA_DIR:
+    volumes:
+      - ${HOST_COVERAGE_DATA_DIR}:${CONTAINER_COVERAGE_DATA_DIR}

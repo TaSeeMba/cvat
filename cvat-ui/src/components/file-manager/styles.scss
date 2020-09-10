@@ -1,0 +1,18 @@
+// Copyright (C) 2020 Intel Corporation
+//
+// SPDX-License-Identifier: MIT
+
+@import '../../base.scss';
+
+.cvat-share-tree {
+    height: fit-content;
+    min-height: 10em;
+    max-height: 20em;
+    overflow: auto;
+}
+
+.cvat-empty-share-tree {
+    > .ant-typography {
+        margin-top: 10px;
+    }
+}
