@@ -3,7 +3,7 @@ name: CI/CD Build and Push Pipeline
 on:
   push:
     branches:
-      - release-1.1.0
+      - master
 
 env:
   AWS_DEFAULT_REGION: af-south-1
