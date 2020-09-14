@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cvat-nginx
@@ -8,6 +8,9 @@ metadata:
     tier: proxy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cvat-app
   template:
     metadata:
       labels:

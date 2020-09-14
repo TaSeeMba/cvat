@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cvat-frontend
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: cvat-frontend-app-container
-          image: {my.registry.com/cvat/frontend:1.1.0}
+          image: 143743236805.dkr.ecr.eu-west-1.amazonaws.com/cvat-frontend:acd5ef7c97f442226153bca769c461b2736819eb
           imagePullPolicy: Always
           env:
           - name: REACT_APP_API_PROTOCOL
@@ -36,5 +36,3 @@ spec:
           ports:
           - containerPort: 80
           resources: {}
-      imagePullSecrets:
-        - name: {MY_PULL_SECRETS}

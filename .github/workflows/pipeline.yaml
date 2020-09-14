@@ -48,7 +48,7 @@ jobs:
       - name: Login to ECR
         run: |
           $( aws ecr get-login --no-include-email )
-      - name: Build and tag the backend image
+      - name: Build and tag the frontend image
         run: |
           docker build --file Dockerfile.ui \
             --tag $CONTAINER_IMAGE_FRONTEND \

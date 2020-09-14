@@ -11,7 +11,8 @@ INSTALLED_APPS += [
     'django_extensions',
 ]
 
-ALLOWED_HOSTS.append('testserver')
+# ALLOWED_HOSTS.append('testserver')
+ALLOWED_HOSTS = ["*"]
 
 # Django-sendfile:
 # https://github.com/johnsensible/django-sendfile

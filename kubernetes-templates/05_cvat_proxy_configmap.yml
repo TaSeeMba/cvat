@@ -33,7 +33,7 @@ data:
 
     server {
         listen       80;
-        server_name  {MY_SERVER_URL_COM};
+        # server_name  {MY_SERVER_URL_COM};
 
         proxy_pass_header       X-CSRFToken;
         proxy_set_header        Host $http_host;
