@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: cvat-backend-app-container
-          image: 143743236805.dkr.ecr.eu-west-1.amazonaws.com/cvat-backend:acd5ef7c97f442226153bca769c461b2736819eb
+          image: 143743236805.dkr.ecr.eu-west-1.amazonaws.com/cvat-backend:107843e07b2914d5b438cf2f4d53619982427461
           imagePullPolicy: Always
           resources:
             requests:
