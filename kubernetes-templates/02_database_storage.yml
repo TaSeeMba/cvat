@@ -10,3 +10,18 @@ spec:
   resources:
     requests:
       storage: 20Gi
+
+# ---
+
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: efs-claim
+#   namespace: cvat
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   storageClassName: efs-sc
+#   resources:
+#     requests:
+#       storage: 5Gi

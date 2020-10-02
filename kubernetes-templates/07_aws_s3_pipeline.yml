@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-s3-pipeline
+  namespace: cvat
+  labels:
+    app: cvat-app
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: cvat-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: cvat-app
+        tier: backend
+    spec:
+      containers:
+        - name: aws-s3-pipeline
+          image: jshimko/kube-tools-aws:latest
+          imagePullPolicy: Always
+          command:
+            - bash
+          args:
+            - -c
+            - "aws s3 cp s3://aida/ /home/django/share/ --recursive && ls -la /home/django/share"
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            value: ""
+          - name: AWS_SECRET_ACCESS_KEY
+            value: ""
+          - name: AWS_DEFAULT_REGION
+            value: "eu-west-1"
+          ports:
+          - containerPort: 80
+          resources: {}
+          volumeMounts:
+          - mountPath:  /home/django/share
+            name: cvat-backend-data
+            subPath: share
+      volumes:
+        - name: cvat-backend-data
+          persistentVolumeClaim:
+            claimName: cvat-backend-data

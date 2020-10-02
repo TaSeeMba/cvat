@@ -29,6 +29,8 @@ spec:
               cpu: 10m
               memory: 100Mi
           env:
+          - name: CVAT_SHARE_URL
+            value: "/data"
           - name: DJANGO_MODWSGI_EXTRA_ARGS
             value: ""
           - name: UI_PORT
@@ -72,6 +74,9 @@ spec:
           - mountPath: /home/django/models
             name: cvat-backend-data
             subPath: models
+          - mountPath: /home/django/share
+            name: cvat-backend-data
+            subPath: share
       initContainers:
         - name: user-data-permission-fix
           image: busybox
@@ -89,7 +94,13 @@ spec:
           - mountPath: /home/django/models
             name: cvat-backend-data
             subPath: models
+          - mountPath: /home/django/share
+            name: cvat-backend-data
+            subPath: share
       volumes:
         - name: cvat-backend-data
           persistentVolumeClaim:
             claimName: cvat-backend-data
+        # - name: efs-share
+        #   persistentVolumeClaim:
+        #     claimName: efs-claim
