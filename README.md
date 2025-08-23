@@ -1,5 +1,18 @@
 # Computer Vision Annotation Tool (CVAT)
 
+## My Open source Contribution to the CVAT tool
+
+This repository extends the original [CVAT](https://github.com/openvinotoolkit/cvat) project by introducing **Kubernetes deployment templates**. At the time of publication, CVAT could only be deployed on a single EC2 instance, limiting scalability and manageability.  
+
+To address this, I contributed a **`kubernetes-templates/` folder** containing manifests and scripts that enable seamless deployment of CVAT into a Kubernetes cluster. These templates allow teams to:  
+
+- Deploy CVAT in a **scalable, cloud-native environment**  
+- Manage workloads with **Kubernetes orchestration**  
+- Simplify updates, monitoring, and resource allocation  
+- Run CVAT across multiple nodes for improved performance and reliability  
+
+This addition empowers users to move beyond single-instance setups and leverage Kubernetes for production-grade, distributed deployments of CVAT.  
+
 [![Build Status](https://travis-ci.org/opencv/cvat.svg?branch=develop)](https://travis-ci.org/opencv/cvat)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/840351da141e4eaeac6476fd19ec0a33)](https://app.codacy.com/app/cvat/cvat?utm_source=github.com&utm_medium=referral&utm_content=opencv/cvat&utm_campaign=Badge_Grade_Dashboard)
 [![Gitter chat](https://badges.gitter.im/opencv-cvat/gitter.png)](https://gitter.im/opencv-cvat)
